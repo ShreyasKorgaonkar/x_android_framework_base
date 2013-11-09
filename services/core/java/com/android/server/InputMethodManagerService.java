@@ -433,9 +433,9 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
                     Settings.System.STATUS_BAR_IME_SWITCHER),
                     false, new ContentObserver(mHandler) {
                         public void onChange(boolean selfChange) {
-                            updateFromSettingsLocked(true);
+                            updateInputMethodsFromSettingsLocked(true);
                         }
-                    });
+                    }, UserHandle.USER_ALL);
         }
 
         @Override public void onChange(boolean selfChange, Uri uri) {
@@ -1760,14 +1760,17 @@ public class InputMethodManagerService extends IInputMethodManager.Stub
             mCurMethodId = null;
             unbindCurrentMethodLocked(true, false);
         }
-        // code to disable the CM Phone IME switcher with config_show_cmIMESwitcher set = false
+
+        // code to disable the IME switcher with config_show_IMESwitcher set = false
         try {
-            mShowOngoingImeSwitcherForPhones = Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.STATUS_BAR_IME_SWITCHER) == 1;
+            mShowOngoingImeSwitcherForPhones =
+                Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_IME_SWITCHER, UserHandle.USER_CURRENT) == 1;
         } catch (SettingNotFoundException e) {
             mShowOngoingImeSwitcherForPhones = mRes.getBoolean(
-            com.android.internal.R.bool.config_show_cmIMESwitcher);
+                com.android.internal.R.bool.config_show_IMESwitcher);
         }
+
         // Here is not the perfect place to reset the switching controller. Ideally
         // mSwitchingController and mSettings should be able to share the same state.
         // TODO: Make sure that mSwitchingController and mSettings are sharing the

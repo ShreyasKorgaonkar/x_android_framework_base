@@ -465,6 +465,15 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
         if (mBar != null) {
             try {
                 mBar.showCustomIntentAfterKeyguard(intent);
+         }  catch (RemoteException ex) {}
+        }
+       }
+
+    @Override
+    public void setAutoRotate(boolean enabled) {
+        if (mBar != null) {
+            try {
+                mBar.setAutoRotate(enabled);
             } catch (RemoteException ex) {}
         }
     }

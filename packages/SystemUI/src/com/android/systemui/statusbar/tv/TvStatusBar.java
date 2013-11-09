@@ -107,6 +107,10 @@ public class TvStatusBar extends BaseStatusBar {
     @Override // CommandQueue
     public void showCustomIntentAfterKeyguard(Intent intent) {
     }
+    
+    @Override // CommandQueue
+    public void setAutoRotate(boolean enabled) {
+    }
 
     @Override
     protected WindowManager.LayoutParams getSearchLayoutParams(
