@@ -54,6 +54,7 @@ import java.util.List;
  */
 public class SubscriptionManager {
     private static final String LOG_TAG = "SubscriptionManager";
+
     private static final boolean DBG = false;
     private static final boolean VDBG = false;
 
