@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package com.android.internal.util.slim;
+package com.android.internal.util.candy;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
@@ -127,13 +127,13 @@ public class DeviceUtils {
     }
 
     private static boolean isSupportedFeature(Context context, String action) {
-        if (action.equals(SlimActionConstants.ACTION_TORCH)
+        if (action.equals(CandyActionConstants.ACTION_TORCH)
                         && !deviceSupportsTorch(context)
-                || action.equals(SlimActionConstants.ACTION_VIB)
+                || action.equals(CandyActionConstants.ACTION_VIB)
                         && !deviceSupportsVibrator(context)
-                || action.equals(SlimActionConstants.ACTION_VIB_SILENT)
+                || action.equals(CandyActionConstants.ACTION_VIB_SILENT)
                         && !deviceSupportsVibrator(context)
-                || action.equals(SlimActionConstants.ACTION_SMART_PULLDOWN)
+                || action.equals(CandyActionConstants.ACTION_SMART_PULLDOWN)
                         && isTablet(context)) {
             return false;
         }
