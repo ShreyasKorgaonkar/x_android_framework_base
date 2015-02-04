@@ -64,3 +64,4 @@ public class ScreenType {
         return getScreenType(context) == DEVICE_TABLET;
     }
 }
+
