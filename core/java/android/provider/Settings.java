@@ -3574,6 +3574,7 @@ public final class Settings {
          * Whether or not to hide the network traffic indicator when there is no activity
          * @hide
          */
+
         public static final String NETWORK_TRAFFIC_AUTOHIDE = "network_traffic_autohide";
 
         /**
@@ -3593,6 +3594,14 @@ public final class Settings {
          * @hide
          */
         public static final String NETWORK_TRAFFIC_HIDE_ARROW = "network_traffic_hide_arrow";
+        
+        /**
+         * Whether to mute annoying notifications
+	 * Disable ads (HFM)
+	 * @hide
+	 */
+	public static final String HFM_DISABLE_ADS = "hfm_disable_ads";
+
 
 
         /**
