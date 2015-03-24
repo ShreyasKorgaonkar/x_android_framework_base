@@ -244,9 +244,10 @@
     <string name="quick_settings_screen_timeout_detail_title">Screen timeout</string>
     <string name="quick_settings_usb_tether_label">USB tethering</string>
     <string name="quick_settings_heads_up_label">Heads up</string>
-    <string name="quick_settings_ambient_display_label">Ambient display</string>
     <string name="quick_settings_sync_label">Sync</string>
     <string name="quick_settings_custom_tile_detail_title">Custom tile</string>
+    <string name="quick_settings_screenrecord">Screenrecord</string>
+    <string name="quick_settings_screenrecord_on">Recording ...</string>
 
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_expanded_header_weather_format"><xliff:g id="temp">%1$s</xliff:g> - <xliff:g id="condition">%2$s</xliff:g></string>
@@ -304,7 +305,7 @@
    <!-- Fingerprint -->
    <string name="fingerprint_try_again_hint">Please scan again</string>
 
-<!-- Gesture panel -->
+    <!-- Gesture panel -->
     <string name="gesture_panel_add">Add</string>
 
     <!-- Navigation bar -->
@@ -313,6 +314,20 @@
     <!-- Heads up snooze toast -->
     <string name="heads_up_snooze_message">Heads up is snoozed for <xliff:g id="number">%d</xliff:g> minute in dismissed package.</string>
 
-    <!-- Content description of the dock battery level icon for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_dock_battery_level">Dock battery <xliff:g id="number">%d</xliff:g> percent.</string>
+    <!-- Screenrecord Notification Ticker -->
+    <string name="screenrecord_notif_ticker">Screen is being recorded</string>
+
+    <!-- Screenrecord notification title -->
+    <string name="screenrecord_notif_title">Recording screen</string>
+
+    <!-- Screenrecord notification action: Stop -->
+    <string name="screenrecord_notif_stop">Stop</string>
+
+    <!-- Screenrecord notification action: show/hide pointer -->
+    <string name="screenrecord_notif_pointer_on">Show pointer</string>
+    <string name="screenrecord_notif_pointer_off">Hide pointer</string>
+
+    <!-- Screen record notification error title -->
+    <string name="screenrecord_notif_error">Unable to record screen</string>
+
 </resources>
