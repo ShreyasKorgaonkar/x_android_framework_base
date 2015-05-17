@@ -259,7 +259,6 @@ public final class Settings {
      * Input: Nothing.
      * <p>
      * Output: Nothing.
-
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_WIFI_SETTINGS =
@@ -3625,6 +3624,18 @@ public final class Settings {
          * @hide
          */
         public static final String HEADS_UP_TOUCH_OUTSIDE = "heads_up_touch_outside";
+
+	/**
+         * Heads Up background color
+         * @hide
+         */
+        public static final String HEADS_UP_BG_COLOR = "heads_up_bg_color";
+
+        /**
+         * Heads Up text color
+         * @hide
+         */
+        public static final String HEADS_UP_TEXT_COLOR = "heads_up_text_color";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
