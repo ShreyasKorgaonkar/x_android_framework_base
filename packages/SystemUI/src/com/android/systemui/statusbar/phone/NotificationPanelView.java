@@ -44,6 +44,7 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.util.cm.LockscreenShortcutsHelper;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.keyguard.KeyguardUpdateMonitor;
@@ -157,6 +158,7 @@ public class NotificationPanelView extends PanelView implements
 
     private boolean mBlockTouches;
     private int mNotificationScrimWaitDistance;
+
     // Used for two finger gesture as well as accessibility shortcut to QS.
     private boolean mQsExpandImmediate;
     private boolean mTwoFingerQsExpandPossible;
@@ -187,9 +189,12 @@ public class NotificationPanelView extends PanelView implements
     private int mOldLayoutDirection;
 
     private Handler mHandler = new Handler();
+    private LockPatternUtils mLockPatternUtils;
     private SettingsObserver mSettingsObserver;
 
     private int mOneFingerQuickSettingsIntercept;
+    private int mQsSmartPullDown;
+    private boolean mStatusBarLockedOnSecureKeyguard;
     private boolean mDoubleTapToSleepEnabled;
     private boolean mDoubleTapToSleepAnywhere;
     private int mStatusBarHeaderHeight;
@@ -200,6 +205,7 @@ public class NotificationPanelView extends PanelView implements
         setWillNotDraw(!DEBUG);
 
         mSettingsObserver = new SettingsObserver(mHandler);
+        mLockPatternUtils = new LockPatternUtils(mContext);
         mDoubleTapGesture = new GestureDetector(mContext, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
@@ -471,8 +477,13 @@ public class NotificationPanelView extends PanelView implements
         requestLayout();
     }
 
+    private boolean isQSEventBlocked() {
+        return mLockPatternUtils.isSecure()
+            && mStatusBarLockedOnSecureKeyguard && mKeyguardShowing;
+    }
+
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled;
+        mQsExpansionEnabled = qsExpansionEnabled && !isQSEventBlocked();
         mHeader.setClickable(qsExpansionEnabled);
     }
 
@@ -678,18 +689,13 @@ public class NotificationPanelView extends PanelView implements
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
-            mStatusBar.setVisualizerTouching(false);
-        }
         if (mBlockTouches) {
             return false;
         }
+
         if (mDoubleTapToSleepEnabled
                 && mStatusBarState == StatusBarState.KEYGUARD
                 && event.getY() < mStatusBarHeaderHeight) {
-            mDoubleTapGesture.onTouchEvent(event);
-        } else if (mDoubleTapToSleepAnywhere
-                && mStatusBarState == StatusBarState.KEYGUARD) {
             mDoubleTapGesture.onTouchEvent(event);
         }
         resetDownStates(event);
@@ -701,6 +707,7 @@ public class NotificationPanelView extends PanelView implements
         if (mOnlyAffordanceInThisMotion) {
             return true;
         }
+
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN && getExpandedFraction() == 1f
                 && mStatusBar.getBarState() != StatusBarState.KEYGUARD && !mQsExpanded
                 && mQsExpansionEnabled) {
@@ -735,14 +742,20 @@ public class NotificationPanelView extends PanelView implements
                 && event.getPointerCount() == 2);
         boolean oneFingerQsOverride = event.getActionMasked() == MotionEvent.ACTION_DOWN
                 && shouldQuickSettingsIntercept(event.getX(), event.getY(), -1, false);
+
+        if (mQsSmartPullDown == 1 && !mStatusBar.hasActiveClearableNotifications()
+                || mQsSmartPullDown == 2 && !mStatusBar.hasActiveVisibleNotifications()
+                || (mQsSmartPullDown == 3 && !mStatusBar.hasActiveVisibleNotifications()
+                        && !mStatusBar.hasActiveClearableNotifications())) {
+            if (!isQSEventBlocked()) {
+                oneFingerQsOverride = true;
+            }
+        }
+
         if ((twoFingerQsEvent || oneFingerQsOverride)
                 && event.getY(event.getActionIndex()) < mStatusBarMinHeight) {
             mQsExpandImmediate = true;
             requestPanelHeightUpdate();
-
-            // Normally, we start listening when the panel is expanded, but here we need to start
-            // earlier so the state is already up to date when dragging down.
-            setListening(true);
         }
         super.onTouchEvent(event);
         return true;
@@ -2095,6 +2108,8 @@ public class NotificationPanelView extends PanelView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_QUICK_PULLDOWN), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE), false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE), false, this, UserHandle.USER_ALL);
@@ -2114,6 +2129,8 @@ public class NotificationPanelView extends PanelView implements
                     Settings.System.QS_QUICK_PULLDOWN, 0, UserHandle.USER_CURRENT);
             mDoubleTapToSleepEnabled = Settings.System.getIntForUser(resolver,
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE, 1, UserHandle.USER_CURRENT) == 1;
+            mQsSmartPullDown = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_SMART_PULLDOWN, 0, UserHandle.USER_CURRENT);
             mDoubleTapToSleepAnywhere = Settings.System.getIntForUser(resolver,
                     Settings.System.DOUBLE_TAP_SLEEP_ANYWHERE, 0, UserHandle.USER_CURRENT) == 1;
         }
