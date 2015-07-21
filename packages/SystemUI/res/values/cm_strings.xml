@@ -304,6 +304,15 @@
    <!-- Fingerprint -->
    <string name="fingerprint_try_again_hint">Please scan again</string>
 
+<!-- Gesture panel -->
+    <string name="gesture_panel_add">Add</string>
+
+    <!-- Navigation bar -->
+    <string name="def_navbar_layout_warning">Empty layout: using default!</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message">Heads up is snoozed for <xliff:g id="number">%d</xliff:g> minute in dismissed package.</string>
+
     <!-- Content description of the dock battery level icon for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_dock_battery_level">Dock battery <xliff:g id="number">%d</xliff:g> percent.</string>
 </resources>
