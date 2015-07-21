@@ -3562,6 +3562,13 @@ public final class Settings {
                 "volume_keys_control_ring_stream";
 
         /**
+         * Whether to mute annoying notifications
+	 * Disable ads (HFM)
+	 * @hide
+	 */
+	public static final String HFM_DISABLE_ADS = "hfm_disable_ads";
+
+        /**
          * The statusbar configuration to be used for its creation in SystemUI
          * Fallback is the config_statusBarComponent value
          * @hide
