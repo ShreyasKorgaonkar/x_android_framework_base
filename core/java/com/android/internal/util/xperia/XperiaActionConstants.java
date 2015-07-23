@@ -14,12 +14,12 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.candy;
+package com.android.internal.util.xperia;
 
-public class CandyActionConstants {
+public class XperiaActionConstants {
 
     // key must fit with the values arrays from Settings to use
-    // CandyActions.java actions
+    // XperiaActions.java actions
     public static final String ACTION_HOME                 = "**home**";
     public static final String ACTION_BACK                 = "**back**";
     public static final String ACTION_SEARCH               = "**search**";

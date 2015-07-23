@@ -33,10 +33,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.internal.util.candy.AppHelper;
-import com.android.internal.util.candy.ActionHelper;
-import com.android.internal.util.candy.ActionConfig;
-import com.android.internal.util.candy.Action;
+import com.android.internal.util.xperia.AppHelper;
+import com.android.internal.util.xperia.ActionHelper;
+import com.android.internal.util.xperia.ActionConfig;
+import com.android.internal.util.xperia.Action;
 import com.android.internal.widget.LockPatternUtils;
 
 import com.android.keyguard.R;

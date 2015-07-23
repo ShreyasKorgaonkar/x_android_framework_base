@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.candy;
+package com.android.internal.util.xperia;
 
 import android.app.Activity;
 import android.app.ActivityManagerNative;
@@ -136,7 +136,7 @@ public class Action {
                     }
                     startActivity(context, intent, barService, isKeyguardShowing);
                 } catch (ActivityNotFoundException e) {
-                    Log.e("CandyActions:", "No activity to handle assist long press action.", e);
+                    Log.e("XperiaActions:", "No activity to handle assist long press action.", e);
                 }
                 return;
             } else if (action.equals(ActionConstants.ACTION_VIB)) {
@@ -225,7 +225,7 @@ public class Action {
                 try {
                     intent = Intent.parseUri(action, 0);
                 } catch (URISyntaxException e) {
-                    Log.e("CandyActions:", "URISyntaxException: [" + action + "]");
+                    Log.e("XperiaActions:", "URISyntaxException: [" + action + "]");
                     return;
                 }
                 startActivity(context, intent, barService, isKeyguardShowing);
