@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.android.internal.util.candy;
+package com.android.internal.util.xperia;
 
 public class ActionConfig {
 
